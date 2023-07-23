@@ -25,8 +25,7 @@ export class ProductsService {
       throw new NotFoundException({statusCode: 404, mesage:'Product not found' });
     }
 
-   // Update only product send in body
-   Object.keys(updateProductDto).forEach((key) => {
+    Object.keys(updateProductDto).forEach((key) => {
     if (updateProductDto[key] !== undefined) {
       product[key] = updateProductDto[key];
     }

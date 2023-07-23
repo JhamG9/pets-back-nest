@@ -2,12 +2,18 @@ import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Res, UseGuards,
 import { AddProductCartDto } from './dto/add-product-cart.dto';
 import { CartService } from './cart.service';
 import { Cart } from './cart.schema';
-import { CreateProductMiddleware } from 'src/middleware/create-product.middleware';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('cart')
 export class CartController {
   
-  constructor(private cartService: CartService){}
+  constructor(private cartService: CartService,
+    private readonly configService: ConfigService){}
+
+  @Get('/test')
+    getSecretKey(): string {
+      return this.configService.get('MONGODB_CONNECTION'); // read environment variable
+  }
 
   @Post()
   async addToCart(@Body() cartItemDto: AddProductCartDto, @Res() res) {
@@ -34,7 +40,6 @@ export class CartController {
   }
 
   @Delete(':id')
-  @UseInterceptors(CreateProductMiddleware)
   async removeFromCart(@Param('id') id: string, @Res() res) {
     try {
       await this.cartService.removeFromCart(id);

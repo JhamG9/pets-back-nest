@@ -4,7 +4,6 @@ import { Cart, CartDocument } from './cart.schema';
 import { Model, Types } from 'mongoose';
 import { AddProductCartDto } from './dto/add-product-cart.dto';
 import { Product, ProductDocument } from 'src/products/product.schema';
-import { validate } from 'class-validator'; // Importamos el método validate
 
 @Injectable()
 export class CartService {
@@ -17,7 +16,6 @@ export class CartService {
     const { product_id, quantity } = cartItemDto;
 
     try {
-      // Verificar si el producto existe
       const productExists = await this.productModel.exists({
         _id: new Types.ObjectId(product_id),
       });
@@ -39,11 +37,10 @@ export class CartService {
     }
   }
 
-  // Obtiene todos los elementos del carrito
   async getAllCartItems(): Promise<Cart[]> {
     return this.cartModel
       .find()
-      .populate({ path: 'product_id', select: 'name price' })
+      .populate({ path: 'product_id', select: 'name price image_url' })
       .exec();
   }
 
