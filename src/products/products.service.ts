@@ -22,7 +22,7 @@ export class ProductsService {
     const product = await this.productModel.findById(id).exec();
 
     if (!product) {
-      throw new NotFoundException('Product not found');
+      throw new NotFoundException({statusCode: 404, mesage:'Product not found' });
     }
 
    // Update only product send in body

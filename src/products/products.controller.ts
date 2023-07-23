@@ -3,8 +3,6 @@ import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { GetProductsDto } from './dto/get-products.dto';
-import { Pagination } from 'src/interfaces/pagination.interface';
-import { Product } from './product.schema';
 
 @Controller('products')
 export class ProductsController {
